@@ -1,0 +1,410 @@
+/* 
+  Arquivo: estilo.css 
+  Estilo para o Quiz de Biologia Celular
+  Inspirado em Material Design + tipografia Apple, Flat Design, responsivo.
+*/
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fonte principal */
+body {
+  font-family: 'Inter', 'San Francisco', 'Poppins', Arial, sans-serif;
+  background: #f5f5f5;
+  color: #222;
+  min-height: 100vh;
+  transition: background 0.4s, color 0.4s;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fundo dark */
+body.dark {
+  background: #121212;
+  color: #f5f5f5;
+  transition: background 0.4s, color 0.4s;
+}
+
+body.dark::before {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 0;
+  background: transparent;
+}
+
+/* Telas centrais */
+.screen {
+  width: 100%;
+  max-width: 480px;
+  margin: 48px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(26, 115, 232, 0.08), 0 1.5px 6px rgba(60,60,60,0.07);
+  padding: 32px 24px 24px 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 1;
+  transition: background 0.4s, color 0.4s;
+}
+
+body.dark .screen {
+  background: #232323;
+  color: #f5f5f5;
+  box-shadow: 0 8px 32px rgba(26, 115, 232, 0.11), 0 1.5px 6px rgba(0,0,0,0.15);
+}
+
+/* Centralização elegante */
+.centralizada {
+  align-items: center;
+  justify-content: center;
+}
+
+/* Centralizar botões na tela final */
+.botoes-centro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+}
+
+/* Logo/Easter egg */
+.logo {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a73e8;
+  letter-spacing: 0.02em;
+  text-align: center;
+  user-select: none;
+  margin-bottom: 16px;
+  outline: none;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+.logo span {
+  color: #222;
+  font-weight: 400;
+}
+body.dark .logo span { color: #f5f5f5; }
+.logo:active {
+  filter: brightness(1.2) drop-shadow(0 0 4px #1a73e8aa);
+}
+
+/* Texto justificado na intro */
+.intro p {
+  text-align: justify;
+  font-size: 1.05rem;
+  margin: 0.5em 0;
+}
+
+/* Botões iniciais centralizados */
+.botoes-iniciais {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+  justify-content: center;
+}
+
+/* Botões de dificuldade e gerais */
+.botao-dificuldade, .alternativa-btn, #reiniciar-btn {
+  background: #1a73e8;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  padding: 1em 2.4em;
+  font-size: 1.13rem;
+  cursor: pointer;
+  margin-top: 0.5em;
+  box-shadow: 0 1.5px 6px rgba(26, 115, 232, 0.10);
+  transition: transform 0.13s, box-shadow 0.13s, background 0.22s;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.botao-dificuldade:hover, .alternativa-btn:hover, #reiniciar-btn:hover {
+  transform: scale(1.045);
+  box-shadow: 0 4px 16px rgba(26, 115, 232, 0.16);
+}
+
+.botao-dificuldade:active, .alternativa-btn:active, #reiniciar-btn:active {
+  transform: scale(0.97);
+  background: #1668c1;
+}
+
+/* Barra de progresso */
+.barra-progresso-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.barra-progresso-bg {
+  width: 100%;
+  height: 10px;
+  background: #e3e8ef;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1.5px 6px rgba(26,115,232,0.04);
+}
+.barra-progresso {
+  height: 10px;
+  width: 0;
+  background: #1a73e8;
+  border-radius: 12px;
+  transition: width 0.4s cubic-bezier(.38,1.14,.58,1), background 0.3s;
+}
+body.dark .barra-progresso-bg { background: #252c37; }
+body.dark .barra-progresso { background: #1a73e8; }
+
+.contador {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.07rem;
+  margin-top: 4px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#contador-perguntas { font-weight: 600; color: #1a73e8; }
+body.dark #contador-perguntas { color: #7babfa; }
+#mensagem-motivacional {
+  font-size: 0.97rem;
+  color: #888;
+  margin-left: 8px;
+  flex: 1 1 auto;
+  text-align: left;
+}
+body.dark #mensagem-motivacional { color: #bbb; }
+
+/* Botão de ajuda (ícone interrogação) */
+.ajuda-btn {
+  width: 40px;
+  height: 40px;
+  background: #e3e8ef;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16px;
+  cursor: pointer;
+  position: relative;
+  font-size: 1.45rem;
+  box-shadow: 0 1.5px 6px rgba(26,115,232,0.09);
+  transition: background 0.18s, box-shadow 0.15s;
+}
+.ajuda-btn::before {
+  content: "?";
+  color: #1a73e8;
+  font-weight: 700;
+  font-size: 1.25em;
+}
+.ajuda-btn:active { background: #d2e3fc; }
+body.dark .ajuda-btn { background: #252c37; }
+body.dark .ajuda-btn::before { color: #90b5f6; }
+
+/* Área do quiz */
+.quiz-area {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  justify-content: center;
+  align-items: stretch;
+}
+#pergunta {
+  font-size: 1.18rem;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+  color: #1a73e8;
+  text-align: center;
+}
+body.dark #pergunta { color: #7babfa; }
+
+.alternativas {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.alternativa-btn {
+  background: #f5f5f5;
+  color: #1a73e8;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  font-size: 1.06rem;
+  font-weight: 500;
+  padding: 1em 1.2em;
+  text-align: center;
+  box-shadow: 0 1.5px 6px rgba(26, 115, 232, 0.06);
+  transition: background 0.22s, color 0.22s, border 0.17s, box-shadow 0.18s;
+  position: relative;
+  overflow: visible;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+/* Feedback correto/incorreto */
+.alternativa-btn.correta {
+  border-color: #34c759;
+  background: #eaffed;
+  color: #34c759;
+  animation: pulse-correta 0.6s;
+}
+@keyframes pulse-correta {
+  0%   { box-shadow: 0 0 0 0 #34c75955; }
+  70%  { box-shadow: 0 0 0 12px #34c75911; }
+  100% { box-shadow: 0 0 0 0 #34c75900; }
+}
+.alternativa-btn.errada {
+  border-color: #e53935;
+  background: #ffeaea;
+  color: #e53935;
+  animation: pulse-incorreta 0.6s;
+}
+@keyframes pulse-incorreta {
+  0%   { box-shadow: 0 0 0 0 #e5393555; }
+  70%  { box-shadow: 0 0 0 12px #e5393511; }
+  100% { box-shadow: 0 0 0 0 #e5393500; }
+}
+
+/* Resultado final */
+.resultado h2 {
+  font-size: 2rem;
+  color: #1a73e8;
+  margin-bottom: 0.7em;
+  text-align: center;
+}
+body.dark .resultado h2 { color: #7babfa; }
+.resultado p {
+  font-size: 1.23rem;
+  text-align: center;
+  margin-bottom: 1.7em;
+}
+
+/* Notificações flutuantes */
+.notification {
+  position: fixed;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-70px);
+  min-width: 260px;
+  max-width: 95vw;
+  background: #fff;
+  color: #1a73e8;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px 0 rgba(26, 115, 232, 0.19);
+  padding: 1em 2em;
+  font-size: 1.06rem;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 200;
+  transition: transform 0.38s cubic-bezier(.61,1.48,.49,.95), opacity 0.29s;
+}
+.notification.ativa {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+body.dark .notification {
+  background: #232323;
+  color: #7babfa;
+  box-shadow: 0 4px 24px 0 rgba(26, 115, 232, 0.13);
+}
+
+/* Botão de alternância de tema */
+.theme-toggle {
+  position: fixed;
+  top: 32px;
+  right: 32px;
+  width: 44px;
+  height: 44px;
+  background: #fff;
+  color: #222;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 1.5px 6px rgba(26,115,232,0.08);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 210;
+  font-size: 1.6rem;
+  transition: background 0.2s, color 0.2s, box-shadow 0.19s;
+  padding: 0;
+}
+.theme-toggle:hover {
+  background: #e3e8ef;
+  color: #1a73e8;
+}
+body.dark .theme-toggle {
+  background: #232323;
+  color: #f5f5f5;
+  box-shadow: 0 1.5px 6px rgba(26,115,232,0.11);
+}
+body.dark .theme-toggle:hover {
+  background: #252c37;
+  color: #7babfa;
+}
+
+/* Centralizar SVG dentro do botão */
+#theme-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.theme-toggle svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin: auto;
+}
+
+/* Tema secreto (easter egg) */
+body.secreto {
+  background: linear-gradient(135deg, #ffdf70 0%, #ff70b8 50%, #70ffef 100%);
+  animation: fundo-secreto 8s linear infinite alternate;
+}
+@keyframes fundo-secreto {
+  0%   { filter: hue-rotate(0deg);}
+  100% { filter: hue-rotate(65deg);}
+}
+body.secreto .screen {
+  background: rgba(255,255,255,0.83);
+  box-shadow: 0 8px 32px rgba(250, 70, 100, 0.09), 0 1.5px 6px rgba(60,60,60,0.07);
+}
+
+/* Responsividade */
+@media (max-width: 640px) {
+  .screen {
+    padding: 16px 6vw 18px 6vw;
+    margin: 16px 0;
+    min-width: 0;
+  }
+  .logo { font-size: 1.3rem; }
+  .resultado h2 { font-size: 1.3rem; }
+  .botao-dificuldade, .alternativa-btn, #reiniciar-btn {
+    font-size: 1.01rem;
+    padding: 0.9em 1.3em;
+  }
+  .ajuda-btn {
+    width: 32px; height: 32px; font-size: 1rem;
+  }
+}
