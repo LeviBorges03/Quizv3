@@ -1,410 +1,441 @@
-/* 
-  Arquivo: estilo.css 
-  Estilo para o Quiz de Biologia Celular
-  Inspirado em Material Design + tipografia Apple, Flat Design, responsivo.
-*/
-
-/* Reset básico */
+/* Reset basico pra tirar margens e paddings padrao dos navegadores. Isso evita dor de cabeça. */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box; /* Faz o padding e a borda nao aumentarem o tamanho total do elemento. essencial! */
 }
 
-/* Fonte principal */
+/* Estilo geral do BODY */
 body {
-  font-family: 'Inter', 'San Francisco', 'Poppins', Arial, sans-serif;
-  background: #f5f5f5;
-  color: #222;
-  min-height: 100vh;
-  transition: background 0.4s, color 0.4s;
-  -webkit-font-smoothing: antialiased;
+  font-family: 'Inter', 'San Francisco', 'Poppins', Arial, sans-serif; /* Fontes bonitas, com fallback */
+  background: #f5f5f5; /* Cor de fundo padrao (claro) */
+  color: #222; /* Cor do texto padrao (escuro) */
+  min-height: 100vh; /* Pra ocupar a tela toda na vertical */
+  transition: background 0.4s, color 0.4s; /* Transicao suave qd trocar tema */
+  -webkit-font-smoothing: antialiased; /* Deixa as fontes mais suaveis em alguns navegadores */
+  display: flex; /* Usando flexbox pro layout principal */
+  flex-direction: column; /* Pra organizar o footer direitinho em baixo */
 }
 
-/* Fundo dark */
-body.dark {
-  background: #121212;
-  color: #f5f5f5;
-  transition: background 0.4s, color 0.4s;
+/* Estilos pro TEMA ESCURO */
+body.dark-theme { /* Qd o JS add essa classe no body */
+  background: #121212; /* Fundo escuro */
+  color: #f5f5f5; /* Texto claro */
+  /* a transicao ja ta no body normal, entao funciona pros dois */
 }
 
-body.dark::before {
+/* Efeito meio que de brilho suave no fundo escuro, opcional mas achei legal */
+body.dark-theme::before {
   content: '';
-  pointer-events: none;
-  position: fixed;
+  pointer-events: none; /* Pra nao atrapalhar cliques */
+  position: fixed; /* Fica fixo na tela */
   top: 0; left: 0; width: 100vw; height: 100vh;
-  z-index: 0;
-  background: transparent;
+  z-index: 0; /* Fica atras de tudo */
+  background: transparent; /* Sem fundo solido, vai ser usado com box-shadow ou gradiente no JS se precisar */
+  /* NOTE: esse ::before nao ta fazendo mta coisa agora, dps vejo se uso pra algo ou tiro */
 }
 
-/* Telas centrais */
-.screen {
-  width: 100%;
-  max-width: 480px;
-  margin: 48px auto;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(26, 115, 232, 0.08), 0 1.5px 6px rgba(60,60,60,0.07);
-  padding: 32px 24px 24px 24px;
-  position: relative;
+/* Container principal das TELAS (inicial, quiz, final) */
+.screen-container {
+  width: 100%; /* Ocupa toda a largura disponivel */
+  max-width: 480px; /* Mas no maximo 480px, pra nao ficar mto largo em telas grandes */
+  margin: 48px auto; /* Centraliza na horizontal e da uma margem em cima/baixo */
+  background: #fff; /* Fundo branco pras telas (no tema claro) */
+  border-radius: 12px; /* Bordas arredondadas, mais moderno */
+  box-shadow: 0 8px 32px rgba(26, 115, 232, 0.08), 0 1.5px 6px rgba(60,60,60,0.07); /* Sombra suave */
+  padding: 32px 24px 24px 24px; /* Espacamento interno */
+  position: relative; /* Pra elementos filhos posicionados absolutamente */
+  display: flex; /* Flex de novo */
+  flex-direction: column; /* Conteudo empilhado verticalmente */
+  gap: 16px; /* Espaco entre os elementos filhos diretos */
+  z-index: 1; /* Garante q fique na frente do ::before do body */
+  transition: background 0.4s, color 0.4s; /* Transicao pro tema escuro tb */
+  flex-grow: 1; /* Faz o container crescer pra preencher o espaco, ajuda o footer */
+}
+
+/* Estilo do container de tela no TEMA ESCURO */
+body.dark-theme .screen-container {
+  background: #232323; /* Fundo mais escuro pro container */
+  color: #f5f5f5; /* Texto claro dentro dele */
+  box-shadow: 0 8px 32px rgba(26, 115, 232, 0.11), 0 1.5px 6px rgba(0,0,0,0.15); /* Sombra um pouco diferente */
+}
+
+/* Classe utilitaria pra centralizar conteudo flex */
+.centered-content {
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; /* Centraliza horizontalmente */
+}
+
+/* Div pra centralizar botoes (usado na tela final) */
+.centered-action-buttons {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  z-index: 1;
-  transition: background 0.4s, color 0.4s;
-}
-
-body.dark .screen {
-  background: #232323;
-  color: #f5f5f5;
-  box-shadow: 0 8px 32px rgba(26, 115, 232, 0.11), 0 1.5px 6px rgba(0,0,0,0.15);
-}
-
-/* Centralização elegante */
-.centralizada {
-  align-items: center;
-  justify-content: center;
-}
-
-/* Centralizar botões na tela final */
-.botoes-centro {
-  display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 24px;
+  margin-top: 24px; /* Espacinho em cima */
 }
 
-/* Logo/Easter egg */
-.logo {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #1a73e8;
-  letter-spacing: 0.02em;
-  text-align: center;
-  user-select: none;
-  margin-bottom: 16px;
-  outline: none;
-  cursor: pointer;
-  transition: filter 0.2s;
+/* TITULO principal do Quiz (logo/easter egg) */
+.app-title {
+  font-size: 2rem; /* Tamanho grande */
+  font-weight: 600; /* Negrito medio */
+  color: #1a73e8; /* Cor azul principal */
+  letter-spacing: 0.02em; /* Espacamento entre letras de leve */
+  text-align: center; /* Centralizado */
+  user-select: none; /* Nao da pra selecionar o texto, melhor pra qd é clicavel */
+  margin-bottom: 16px; /* Margem em baixo */
+  outline: none; /* Tira a borda de foco padrao, ja q tem :active */
+  cursor: pointer; /* Maozinha qd passa o mouse */
+  transition: filter 0.2s; /* Transicao pro efeito de clique */
 }
-.logo span {
+.app-title span { /* Parte do titulo q nao é azul */
   color: #222;
-  font-weight: 400;
+  font-weight: 400; /* Mais leve */
 }
-body.dark .logo span { color: #f5f5f5; }
-.logo:active {
-  filter: brightness(1.2) drop-shadow(0 0 4px #1a73e8aa);
-}
-
-/* Texto justificado na intro */
-.intro p {
-  text-align: justify;
-  font-size: 1.05rem;
-  margin: 0.5em 0;
+body.dark-theme .app-title span { color: #f5f5f5; } /* Ajuste pro tema escuro */
+.app-title:active { /* Efeito qd clica no titulo */
+  filter: brightness(1.2) drop-shadow(0 0 4px #1a73e8aa); /* Brilho e sombra */
 }
 
-/* Botões iniciais centralizados */
-.botoes-iniciais {
-  display: flex;
-  gap: 24px;
-  margin-top: 24px;
-  justify-content: center;
+/* Paragrafos da secao de INTRODUCAO */
+.introduction-section p {
+  text-align: justify; /* Texto justificado fica mais formal */
+  font-size: 1.05rem; /* Tamanho um pouco maior q o padrao */
+  margin: 0.5em 0; /* Margem vertical entre paragrafos */
 }
 
-/* Botões de dificuldade e gerais */
-.botao-dificuldade, .alternativa-btn, #reiniciar-btn {
-  background: #1a73e8;
-  color: #fff;
-  font-weight: 600;
-  border: none;
-  border-radius: 12px;
-  padding: 1em 2.4em;
-  font-size: 1.13rem;
-  cursor: pointer;
-  margin-top: 0.5em;
-  box-shadow: 0 1.5px 6px rgba(26, 115, 232, 0.10);
-  transition: transform 0.13s, box-shadow 0.13s, background 0.22s;
-  outline: none;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-  display: flex;
+/* Container dos BOTOES INICIAIS (Fácil/Difícil) */
+.initial-action-buttons {
+  display: flex; /* Um do lado do outro */
+  gap: 24px; /* Espaco entre eles */
+  margin-top: 24px; /* Margem em cima */
+  justify-content: center; /* Centraliza os botoes */
+}
+
+/* Estilo base pra BOTOES de dificuldade, alternativas e reiniciar */
+.difficulty-button, .answer-option-button, #restart-quiz-button {
+  background: #1a73e8; /* Fundo azul */
+  color: #fff; /* Texto branco */
+  font-weight: 600; /* Negrito */
+  border: none; /* Sem borda padrao */
+  border-radius: 12px; /* Bordas arredondadas */
+  padding: 1em 2.4em; /* Espacamento interno, em 'em' pra ser proporcional à fonte */
+  font-size: 1.13rem; /* Tamanho da fonte do botao */
+  cursor: pointer; /* Maozinha */
+  margin-top: 0.5em; /* Pequena margem em cima */
+  box-shadow: 0 1.5px 6px rgba(26, 115, 232, 0.10); /* Sombra suave */
+  transition: transform 0.13s, box-shadow 0.13s, background 0.22s; /* Transicoes suaves pra hover e active */
+  outline: none; /* Tira borda de foco */
+  position: relative; /* Pra efeitos futuros se precisar */
+  overflow: hidden; /* Caso algum efeito precise "vazar" e cortar */
+  text-align: center; /* Texto centralizado */
+  display: flex; /* Pra alinhar conteudo interno (caso tenha icone + texto) */
   justify-content: center;
   align-items: center;
 }
 
-.botao-dificuldade:hover, .alternativa-btn:hover, #reiniciar-btn:hover {
-  transform: scale(1.045);
-  box-shadow: 0 4px 16px rgba(26, 115, 232, 0.16);
+/* Efeito HOVER nos botoes */
+.difficulty-button:hover, .answer-option-button:hover, #restart-quiz-button:hover {
+  transform: scale(1.045); /* Aumenta um pouquinho */
+  box-shadow: 0 4px 16px rgba(26, 115, 232, 0.16); /* Sombra mais destacada */
 }
 
-.botao-dificuldade:active, .alternativa-btn:active, #reiniciar-btn:active {
-  transform: scale(0.97);
-  background: #1668c1;
+/* Efeito ACTIVE (clique) nos botoes */
+.difficulty-button:active, .answer-option-button:active, #restart-quiz-button:active {
+  transform: scale(0.97); /* Diminui um pouquinho */
+  background: #1668c1; /* Azul um pouco mais escuro */
 }
 
-/* Barra de progresso */
-.barra-progresso-container {
+/* BARRA DE PROGRESSO */
+.progress-bar-wrapper { /* Container da barra e do texto */
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 8px; /* Espaco entre a barra e o texto */
+  margin-bottom: 16px; /* Margem em baixo pra separar da pergunta */
 }
-.barra-progresso-bg {
+.progress-bar-background { /* Fundo da barra */
   width: 100%;
-  height: 10px;
-  background: #e3e8ef;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 1.5px 6px rgba(26,115,232,0.04);
+  height: 10px; /* Altura da barra */
+  background: #e3e8ef; /* Cor de fundo clara */
+  border-radius: 12px; /* Arredondada */
+  overflow: hidden; /* Pra barra de progresso nao vazar as bordas */
+  box-shadow: 0 1.5px 6px rgba(26,115,232,0.04); /* Sombra discreta */
 }
-.barra-progresso {
+.progress-bar-value { /* A parte colorida da barra q cresce */
   height: 10px;
-  width: 0;
-  background: #1a73e8;
+  width: 0; /* Comeca em 0, o JS aumenta */
+  background: #1a73e8; /* Azul */
   border-radius: 12px;
-  transition: width 0.4s cubic-bezier(.38,1.14,.58,1), background 0.3s;
+  transition: width 0.4s cubic-bezier(.38,1.14,.58,1), background 0.3s; /* Transicao pro enchimento e cor */
+  /* cubic-bezier legal pra dar um efeito mais elastico */
 }
-body.dark .barra-progresso-bg { background: #252c37; }
-body.dark .barra-progresso { background: #1a73e8; }
+/* Barra de progresso no TEMA ESCURO */
+body.dark-theme .progress-bar-background { background: #252c37; }
+body.dark-theme .progress-bar-value { background: #1a73e8; } /* Mantem azul ou poderia ser um azul mais claro */
 
-.contador {
+/* CONTADOR de perguntas e MSG motivacional (embaixo da barra) */
+.progress-counter-section {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Um item em cada ponta, e o do meio se ajusta */
   font-size: 1.07rem;
   margin-top: 4px;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Se nao couber, quebra a linha */
 }
 
-#contador-perguntas { font-weight: 600; color: #1a73e8; }
-body.dark #contador-perguntas { color: #7babfa; }
-#mensagem-motivacional {
-  font-size: 0.97rem;
-  color: #888;
+#question-counter-display { font-weight: 600; color: #1a73e8; } /* "Pergunta X/Y" */
+body.dark-theme #question-counter-display { color: #7babfa; } /* Cor pro tema escuro */
+#motivational-message-display { /* Mensagenzinha */
+  font-size: 0.97rem; /* Pouco menor */
+  color: #888; /* Cinza */
   margin-left: 8px;
-  flex: 1 1 auto;
-  text-align: left;
+  flex: 1 1 auto; /* Pra ocupar o espaco disponivel */
+  text-align: left; /* Alinhado a esquerda, perto do contador */
 }
-body.dark #mensagem-motivacional { color: #bbb; }
+body.dark-theme #motivational-message-display { color: #bbb; }
 
-/* Botão de ajuda (ícone interrogação) */
-.ajuda-btn {
-  width: 40px;
+/* Botao de AJUDA (?) */
+.help-button {
+  width: 40px; /* Quadrado */
   height: 40px;
-  background: #e3e8ef;
+  background: #e3e8ef; /* Fundo claro */
   border: none;
-  border-radius: 50%;
+  border-radius: 50%; /* Totalmente redondo */
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 16px;
+  margin-left: 16px; /* Pra separar da msg motivacional */
   cursor: pointer;
   position: relative;
-  font-size: 1.45rem;
+  font-size: 1.45rem; /* Tamanho base pro "?" dentro */
   box-shadow: 0 1.5px 6px rgba(26,115,232,0.09);
   transition: background 0.18s, box-shadow 0.15s;
 }
-.ajuda-btn::before {
+.help-button::before { /* O "?" é feito com pseudo-elemento */
   content: "?";
-  color: #1a73e8;
-  font-weight: 700;
-  font-size: 1.25em;
+  color: #1a73e8; /* Azul */
+  font-weight: 700; /* Negrito */
+  font-size: 1.25em; /* Relativo ao font-size do botao */
 }
-.ajuda-btn:active { background: #d2e3fc; }
-body.dark .ajuda-btn { background: #252c37; }
-body.dark .ajuda-btn::before { color: #90b5f6; }
+.help-button:active { background: #d2e3fc; } /* Cor de clique */
+/* Botao de ajuda no TEMA ESCURO */
+body.dark-theme .help-button { background: #252c37; }
+body.dark-theme .help-button::before { color: #90b5f6; }
 
-/* Área do quiz */
-.quiz-area {
+/* Area da PERGUNTA e ALTERNATIVAS */
+.question-area {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 28px; /* Espaco entre a pergunta e as alternativas */
   justify-content: center;
-  align-items: stretch;
+  align-items: stretch; /* Alternativas ocupam toda a largura */
 }
-#pergunta {
+#question-text { /* Texto da pergunta */
   font-size: 1.18rem;
   font-weight: 600;
-  margin-bottom: 0.5em;
-  color: #1a73e8;
-  text-align: center;
+  margin-bottom: 0.5em; /* Pequena margem pra baixo */
+  color: #1a73e8; /* Azul */
+  text-align: center; /* Pergunta centralizada */
 }
-body.dark #pergunta { color: #7babfa; }
+body.dark-theme #question-text { color: #7babfa; } /* Cor pro tema escuro */
 
-.alternativas {
+/* Container das ALTERNATIVAS (botoes) */
+.answer-options {
   display: flex;
-  flex-direction: column;
-  gap: 18px;
+  flex-direction: column; /* Empilhadas */
+  gap: 18px; /* Espaco entre os botoes de alternativa */
 }
 
-.alternativa-btn {
-  background: #f5f5f5;
-  color: #1a73e8;
-  border: 2px solid transparent;
-  border-radius: 12px;
-  font-size: 1.06rem;
-  font-weight: 500;
-  padding: 1em 1.2em;
-  text-align: center;
-  box-shadow: 0 1.5px 6px rgba(26, 115, 232, 0.06);
-  transition: background 0.22s, color 0.22s, border 0.17s, box-shadow 0.18s;
-  position: relative;
-  overflow: visible;
-  justify-content: center;
-  align-items: center;
-  display: flex;
+/* Estilo especifico dos BOTOES DE ALTERNATIVA */
+.answer-option-button { /* Herda de .difficulty-button mas sobrescreve algumas coisas */
+  background: #f5f5f5; /* Fundo bem clarinho */
+  color: #1a73e8; /* Texto azul */
+  border: 2px solid transparent; /* Borda transparente pra qd for correta/errada aparecer */
+  /* ja tem border-radius, font-size, padding, etc do estilo base */
+  font-weight: 500; /* Um pouco menos negrito q os de dificuldade */
+  box-shadow: 0 1.5px 6px rgba(26, 115, 232, 0.06); /* Sombra mais sutil */
+  /* a transition ja ta no estilo base */
+  overflow: visible; /* Precisa ser visible pra animacao de pulse nao cortar a sombra */
 }
 
-/* Feedback correto/incorreto */
-.alternativa-btn.correta {
-  border-color: #34c759;
-  background: #eaffed;
-  color: #34c759;
-  animation: pulse-correta 0.6s;
+/* Feedback visual pra alternativa CORRETA */
+.answer-option-button.correct-answer {
+  border-color: #34c759; /* Borda verde */
+  background: #eaffed; /* Fundo verde clarinho */
+  color: #34c759; /* Texto verde */
+  animation: pulse-correct 0.6s; /* Animacao de pulse! */
 }
-@keyframes pulse-correta {
-  0%   { box-shadow: 0 0 0 0 #34c75955; }
-  70%  { box-shadow: 0 0 0 12px #34c75911; }
-  100% { box-shadow: 0 0 0 0 #34c75900; }
+@keyframes pulse-correct { /* Animacao de "pulsar" pra resposta certa */
+  0%   { box-shadow: 0 0 0 0 #34c75955; } /* Sombra da cor da borda, transparente */
+  70%  { box-shadow: 0 0 0 12px #34c75911; } /* Sombra aumenta */
+  100% { box-shadow: 0 0 0 0 #34c75900; } /* Sombra some */
 }
-.alternativa-btn.errada {
-  border-color: #e53935;
-  background: #ffeaea;
-  color: #e53935;
-  animation: pulse-incorreta 0.6s;
+/* Feedback visual pra alternativa ERRADA */
+.answer-option-button.incorrect-answer {
+  border-color: #e53935; /* Borda vermelha */
+  background: #ffeaea; /* Fundo vermelho clarinho */
+  color: #e53935; /* Texto vermelho */
+  animation: pulse-incorrect 0.6s; /* Animacao de pulse tb */
 }
-@keyframes pulse-incorreta {
+@keyframes pulse-incorrect { /* Animacao pra resposta errada, mesma logica */
   0%   { box-shadow: 0 0 0 0 #e5393555; }
   70%  { box-shadow: 0 0 0 12px #e5393511; }
   100% { box-shadow: 0 0 0 0 #e5393500; }
 }
+/* TODO: talvez add um icone de check/X nos botoes de resposta? */
 
-/* Resultado final */
-.resultado h2 {
+/* Estilo da secao de RESULTADOS FINAIS */
+.results-section h2 { /* "Parabéns!" */
   font-size: 2rem;
   color: #1a73e8;
   margin-bottom: 0.7em;
   text-align: center;
 }
-body.dark .resultado h2 { color: #7babfa; }
-.resultado p {
+body.dark-theme .results-section h2 { color: #7babfa; }
+.results-section p { /* Mensagem de pontuacao */
   font-size: 1.23rem;
   text-align: center;
-  margin-bottom: 1.7em;
+  margin-bottom: 1.7em; /* Margem maior pra separar do botao de reiniciar */
 }
 
-/* Notificações flutuantes */
-.notification {
-  position: fixed;
-  top: 32px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-70px);
-  min-width: 260px;
-  max-width: 95vw;
+/* NOTIFICACOES flutuantes (usadas pra ajuda, easter egg, etc) */
+.system-notification {
+  position: fixed; /* Fixa na tela */
+  top: 32px; /* Distancia do topo */
+  left: 50%; /* Pra centralizar horizontalmente com transform */
+  transform: translateX(-50%) translateY(-70px); /* Comeca fora da tela em cima */
+  min-width: 260px; /* Largura minima */
+  max-width: 95vw; /* Nao passar da largura da tela */
   background: #fff;
   color: #1a73e8;
   border-radius: 14px;
-  box-shadow: 0 4px 24px 0 rgba(26, 115, 232, 0.19);
-  padding: 1em 2em;
+  box-shadow: 0 4px 24px 0 rgba(26, 115, 232, 0.19); /* Sombra mais forte */
+  padding: 1em 2em; /* Espacamento interno */
   font-size: 1.06rem;
   font-weight: 500;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 200;
-  transition: transform 0.38s cubic-bezier(.61,1.48,.49,.95), opacity 0.29s;
+  opacity: 0; /* Comeca invisivel */
+  pointer-events: none; /* Nao clica nela qd ta invisivel */
+  z-index: 200; /* Bem na frente de quase tudo */
+  transition: transform 0.38s cubic-bezier(.61,1.48,.49,.95), opacity 0.29s; /* Animacao de entrada e saida */
 }
-.notification.ativa {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
+.system-notification.active { /* Qd o JS add a classe 'active' */
+  opacity: 1; /* Fica visivel */
+  pointer-events: auto; /* Pode ser interagida (se precisar) */
+  transform: translateX(-50%) translateY(0); /* Desliza pra posicao correta */
 }
-body.dark .notification {
+/* Notificacao no TEMA ESCURO */
+body.dark-theme .system-notification {
   background: #232323;
   color: #7babfa;
   box-shadow: 0 4px 24px 0 rgba(26, 115, 232, 0.13);
 }
 
-/* Botão de alternância de tema */
-.theme-toggle {
-  position: fixed;
+/* Botao de alternar TEMA (sol/lua) */
+.theme-switcher {
+  position: fixed; /* Fixo no canto */
   top: 32px;
   right: 32px;
-  width: 44px;
+  width: 44px; /* Tamanho do botao */
   height: 44px;
   background: #fff;
-  color: #222;
+  color: #222; /* Cor do icone dentro */
   border: none;
-  border-radius: 50%;
+  border-radius: 50%; /* Redondo */
   box-shadow: 0 1.5px 6px rgba(26,115,232,0.08);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 210;
-  font-size: 1.6rem;
+  z-index: 210; /* Mais na frente ainda q a notificacao */
+  font-size: 1.6rem; /* Tamanho base pro icone SVG */
   transition: background 0.2s, color 0.2s, box-shadow 0.19s;
-  padding: 0;
+  padding: 0; /* Importante pra centralizar o SVG direitinho */
 }
-.theme-toggle:hover {
+.theme-switcher:hover { /* Hover do botao de tema */
   background: #e3e8ef;
   color: #1a73e8;
 }
-body.dark .theme-toggle {
+/* Botao de tema no TEMA ESCURO */
+body.dark-theme .theme-switcher {
   background: #232323;
   color: #f5f5f5;
   box-shadow: 0 1.5px 6px rgba(26,115,232,0.11);
 }
-body.dark .theme-toggle:hover {
+body.dark-theme .theme-switcher:hover {
   background: #252c37;
   color: #7babfa;
 }
 
-/* Centralizar SVG dentro do botão */
-#theme-icon {
+/* Container do ICONE dentro do botao de tema (pra alinhar o SVG) */
+#theme-switcher-icon-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
+  width: 24px; /* Tamanho do SVG */
   height: 24px;
 }
 
-.theme-toggle svg {
-  display: block;
+.theme-switcher svg { /* Estilo pro SVG do sol/lua */
+  display: block; /* Remove espaco extra embaixo do SVG */
   width: 24px;
   height: 24px;
-  margin: auto;
+  margin: auto; /* Garante centralizacao se o container for maior */
 }
 
-/* Tema secreto (easter egg) */
-body.secreto {
-  background: linear-gradient(135deg, #ffdf70 0%, #ff70b8 50%, #70ffef 100%);
-  animation: fundo-secreto 8s linear infinite alternate;
+/* TEMA SECRETO (easter egg) */
+body.secret-theme { /* Classe ativada pelo JS */
+  background: linear-gradient(135deg, #ffdf70 0%, #ff70b8 50%, #70ffef 100%); /* Gradiente psicodelico */
+  animation: secret-theme-background 8s linear infinite alternate; /* Animacao do fundo */
 }
-@keyframes fundo-secreto {
+@keyframes secret-theme-background { /* Animacao q muda o hue do gradiente */
   0%   { filter: hue-rotate(0deg);}
   100% { filter: hue-rotate(65deg);}
 }
-body.secreto .screen {
-  background: rgba(255,255,255,0.83);
-  box-shadow: 0 8px 32px rgba(250, 70, 100, 0.09), 0 1.5px 6px rgba(60,60,60,0.07);
+body.secret-theme .screen-container { /* Container da tela no tema secreto */
+  background: rgba(255,255,255,0.83); /* Fundo branco semi-transparente */
+  box-shadow: 0 8px 32px rgba(250, 70, 100, 0.09), 0 1.5px 6px rgba(60,60,60,0.07); /* Sombra colorida de leve */
 }
 
-/* Responsividade */
-@media (max-width: 640px) {
-  .screen {
-    padding: 16px 6vw 18px 6vw;
-    margin: 16px 0;
-    min-width: 0;
+/* RODAPÉ */
+.app-footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem; /* Texto menor */
+  color: #777; /* Cinza discreto */
+  margin-top: auto; /* Isso aqui empurra o rodape pra baixo se o conteudo for pequeno! Show! */
+}
+body.dark-theme .app-footer {
+  color: #aaa; /* Cor pro tema escuro */
+}
+
+/* RESPONSIVIDADE - pra telas menores (celular) */
+@media (max-width: 640px) { /* Se a tela for menor q 640px de largura... */
+  .screen-container { /* Ajustes no container principal */
+    padding: 16px 6vw 18px 6vw; /* Padding com unidade de viewport pra adaptar melhor */
+    margin: 16px 0; /* Margem menor em cima/baixo, sem margem lateral */
+    min-width: 0; /* Tira o min-width se tiver */
+    border-radius: 0; /* Sem borda arredondada, ocupa a tela toda */
+    box-shadow: none; /* Sem sombra pra economizar espaco/processamento */
   }
-  .logo { font-size: 1.3rem; }
-  .resultado h2 { font-size: 1.3rem; }
-  .botao-dificuldade, .alternativa-btn, #reiniciar-btn {
+  .app-title { font-size: 1.3rem; } /* Titulo menor */
+  .results-section h2 { font-size: 1.3rem; } /* Titulo do resultado menor */
+  .difficulty-button, .answer-option-button, #restart-quiz-button { /* Botoes menores */
     font-size: 1.01rem;
-    padding: 0.9em 1.3em;
+    padding: 0.9em 1.3em; /* Padding menor */
   }
-  .ajuda-btn {
+  .help-button { /* Botao de ajuda menor */
     width: 32px; height: 32px; font-size: 1rem;
   }
+  .theme-switcher { /* Botao de tema mais pro canto */
+    top: 16px;
+    right: 16px;
+  }
+  .system-notification { /* Notificacao mais pra cima e com borda menor */
+    top: 16px;
+    border-radius: 8px;
+  }
+  .app-footer {
+    padding: 16px; /* Padding menor no rodape */
+  }
+  /* Fim do CSS. Esse deu trabalho pra comentar tudo! haha */
 }

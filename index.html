@@ -1,74 +1,43 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiz de Biologia Celular</title>
-  <!-- Fonte inspirada na Apple, com fallback -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="estilo.css" />
-</head>
-<body>
-  <!-- Notificação flutuante -->
-  <div id="notification" class="notification"></div>
+<!DOCTYPE html> <html lang="pt-BR"> <head>
+  <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>Quiz de Biologia Celular</title> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="estilo.css" /> </head>
+<body> <div id="system-notification-panel" class="system-notification"></div>
 
-  <!-- Tema alternável -->
-  <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema">
-    <span id="theme-icon"></span>
-  </button>
+  <button id="theme-switcher-button" class="theme-switcher" aria-label="Alternar tema">
+    <span id="theme-switcher-icon-container"></span> </button>
 
-  <!-- Tela inicial -->
-  <main id="start-screen" class="screen centralizada">
-    <header>
-      <div id="logo" class="logo" tabindex="0">Quiz de <span>Biologia Celular</span></div>
+  <main id="initial-screen-container" class="screen-container centered-content">
+    <header> <div id="app-header-title" class="app-title" tabindex="0">Quiz de <span>Biologia Celular</span></div>
     </header>
-    <section class="intro">
-      <h1>Bem-vindo ao Quiz!</h1>
+    <section class="introduction-section"> <h1>Bem-vindo ao Quiz!</h1>
       <p>
         Teste seus conhecimentos em Biologia Celular! O quiz é composto por perguntas de múltipla escolha, com feedback dinâmico e visual a cada resposta. Escolha a dificuldade, acompanhe o progresso e desafie-se!
       </p>
       <p>
         Clique em <strong>Fácil</strong> para jogar com 10 perguntas, ou em <strong>Difícil</strong> para 20 perguntas. Não é possível voltar perguntas, então pense bem antes de responder!
       </p>
-    </section>
-    <div class="botoes-iniciais">
-      <button id="btn-facil" class="botao-dificuldade">Fácil</button>
-      <button id="btn-dificil" class="botao-dificuldade">Difícil</button>
+      </section>
+    <div class="initial-action-buttons"> <button id="easy-difficulty-button" class="difficulty-button">Fácil</button>
+      <button id="hard-difficulty-button" class="difficulty-button">Difícil</button>
     </div>
   </main>
 
-  <!-- Tela principal do quiz -->
-  <main id="quiz-screen" class="screen" style="display:none;">
-    <div class="barra-progresso-container">
-      <div class="barra-progresso-bg">
-        <div id="barra-progresso" class="barra-progresso"></div>
-      </div>
-      <div class="contador">
-        <span id="contador-perguntas"></span>
-        <span id="mensagem-motivacional"></span>
-        <button id="ajuda-btn" class="ajuda-btn" aria-label="Ajuda"></button>
-      </div>
+  <main id="quiz-interface-container" class="screen-container" style="display:none;">
+    <div class="progress-bar-wrapper"> <div class="progress-bar-background"> <div id="progress-bar-value" class="progress-bar-value"></div> </div>
+      <div class="progress-counter-section"> <span id="question-counter-display"></span> <span id="motivational-message-display"></span> <button id="help-button" class="help-button" aria-label="Ajuda"></button> </div>
     </div>
-    <section id="quiz-area" class="quiz-area">
-      <h2 id="pergunta"></h2>
-      <div id="alternativas" class="alternativas"></div>
+    <section id="question-display-area" class="question-area"> <h2 id="question-text"></h2> <div id="answer-options-container" class="answer-options"></div> </section>
+  </main>
+
+  <main id="results-screen-container" class="screen-container centered-content" style="display:none;">
+    <header> <div class="app-title">Quiz de <span>Biologia Celular</span></div> </header>
+    <section class="results-section"> <h2>Parabéns!</h2> <p id="final-score-message"></p> <div class="centered-action-buttons"> <button id="restart-quiz-button" class="difficulty-button">Voltar para Tela Inicial</button>
+      </div>
     </section>
   </main>
 
-  <!-- Tela de resultado -->
-  <main id="final-screen" class="screen centralizada" style="display:none;">
-    <header>
-      <div class="logo">Quiz de <span>Biologia Celular</span></div>
-    </header>
-    <section class="resultado">
-      <h2>Parabéns!</h2>
-      <p id="mensagem-final"></p>
-      <div class="botoes-centro">
-        <button id="reiniciar-btn" class="botao-dificuldade">Voltar para Tela Inicial</button>
-      </div>
-    </section>
-  </main>
+  <footer class="app-footer"> <p>By Levi Borges e Livia Borges with Gemini</p> </footer>
 
   <script src="index.js"></script>
-</body>
+  </body>
 </html>
