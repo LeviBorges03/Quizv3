@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação do Quiz de Biologia Celular</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilo.css"> <!-- Reusing the quiz's base style -->
+    <link rel="stylesheet" href="documentation.css"> <!-- Styles specific to documentation -->
+</head>
+<body>
+    <button id="theme-switcher-button" class="theme-switcher" aria-label="Alternar tema">
+        <span id="theme-switcher-icon-container"></span>
+    </button>
+
+    <main id="documentation-container" class="screen-container">
+        <header>
+            <div class="app-title" tabindex="0">Documentação do <span>Quiz de Biologia Celular</span></div>
+        </header>
+
+        <nav id="toc-nav">
+            <h2>Navegação</h2>
+            <ul>
+                <li><a href="#html-section">Estrutura HTML (index.html)</a></li>
+                <li><a href="#css-section">Estilização CSS (estilo.css)</a></li>
+                <li><a href="#js-section">Lógica JavaScript (index.js)</a></li>
+                <li><a href="#doc-css-section">CSS da Documentação (documentation.css)</a></li>
+            </ul>
+        </nav>
+
+        <section id="intro-section">
+            <h1>Introdução</h1>
+            <p>Esta documentação descreve a estrutura e o funcionamento do Quiz de Biologia Celular. O objetivo é fornecer um guia claro sobre como o código está organizado e como cada parte contribui para a funcionalidade geral do quiz.</p>
+            <p>O quiz foi desenvolvido utilizando HTML para a estrutura, CSS para a estilização visual e JavaScript para a lógica interativa.</p>
+        </section>
+
+        <section id="html-section">
+            <h2>Estrutura HTML (<code>index.html</code>)</h2>
+            <p>O arquivo <code>index.html</code> é a espinha dorsal da aplicação, definindo todos os elementos visíveis e a organização do conteúdo. Ele é dividido em várias seções principais:</p>
+            <p>Key attributes like <code>id</code> (for unique elements) and <code>class</code> (for grouping elements) are used extensively to allow specific styling via CSS and targeted manipulation via JavaScript.</p>
+            <ul>
+                <li><strong>Cabeçalho (Header)</strong>: Contém o título do quiz.</li>
+                <li><strong>Tela Inicial (Initial Screen)</strong>: Apresenta o quiz ao usuário, com uma breve introdução e botões para escolher a dificuldade.</li>
+                <li><strong>Interface do Quiz (Quiz Interface)</strong>: Onde as perguntas são exibidas, junto com a barra de progresso e as opções de resposta. Esta seção fica oculta inicialmente.</li>
+                <li><strong>Tela de Resultados (Results Screen)</strong>: Mostra a pontuação final do usuário e um botão para reiniciar. Também oculta inicialmente.</li>
+                <li><strong>Botão de Tema (Theme Switcher)</strong>: Permite ao usuário alternar entre os temas claro e escuro.</li>
+                <li><strong>Painel de Notificação (System Notification)</strong>: Usado para exibir mensagens informativas, como dicas de ajuda.</li>
+                <li><strong>Rodapé (Footer)</strong>: Exibe informações de autoria.</li>
+            </ul>
+            <p>Abaixo, um trecho do código HTML da tela inicial:</p>
+            <pre><code class="language-html">
+&lt;main id="initial-screen-container" class="screen-container centered-content"&gt;
+    &lt;header&gt;
+        &lt;div id="app-header-title" class="app-title" tabindex="0"&gt;Quiz de &lt;span&gt;Biologia Celular&lt;/span&gt;&lt;/div&gt;
+    &lt;/header&gt;
+    &lt;section class="introduction-section"&gt;
+        &lt;h1&gt;Bem-vindo ao Quiz!&lt;/h1&gt;
+        &lt;p&gt;
+            Teste seus conhecimentos em Biologia Celular! O quiz é composto por perguntas de múltipla escolha,
+            com feedback dinâmico e visual a cada resposta. Escolha a dificuldade, acompanhe o progresso e desafie-se!
+        &lt;/p&gt;
+        &lt;p&gt;
+            Clique em &lt;strong&gt;Fácil&lt;/strong&gt; para jogar com 10 perguntas, ou em &lt;strong&gt;Difícil&lt;/strong&gt;
+            para 20 perguntas. Não é possível voltar perguntas, então pense bem antes de responder!
+        &lt;/p&gt;
+    &lt;/section&gt;
+    &lt;div class="initial-action-buttons"&gt;
+        &lt;button id="easy-difficulty-button" class="difficulty-button"&gt;Fácil&lt;/button&gt;
+        &lt;button id="hard-difficulty-button" class="difficulty-button"&gt;Difícil&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/main&gt;
+            </code></pre>
+        </section>
+
+        <section id="css-section">
+            <h2>Estilização CSS (<code>estilo.css</code>)</h2>
+            <p>O arquivo <code>estilo.css</code> é responsável por toda a aparência visual do quiz. Ele define cores, fontes, layout, animações e a responsividade para diferentes tamanhos de tela. Alguns pontos chave incluem:</p>
+            <p>A classe <code>.dark-theme</code> é adicionada ao elemento <code>&lt;body&gt;</code> via JavaScript para aplicar as cores e estilos do tema escuro, que são definidos em conjunto com as variáveis de tema no CSS.</p>
+            <ul>
+                <li><strong>Reset Básico</strong>: Normaliza estilos padrão dos navegadores.</li>
+                <li><strong>Temas Claro e Escuro</strong>: Classes CSS que alteram as cores de fundo, texto e elementos da interface. A alternância é controlada por JavaScript.</li>
+                <li><strong>Layout Flexbox</strong>: Usado extensivamente para alinhar e distribuir elementos nas diferentes telas do quiz.</li>
+                <li><strong>Estilos de Componentes</strong>: Definições para botões, barra de progresso, área de perguntas, notificações, etc.</li>
+                <li><strong>Responsividade</strong>: Media queries para ajustar o layout e o tamanho dos elementos em telas menores, como as de celulares.</li>
+                <li><strong>Animações e Transições</strong>: Efeitos sutis para feedback visual, como ao clicar em botões ou ao exibir respostas corretas/incorretas.</li>
+            </ul>
+            <p>Exemplo de estilização para feedback visual em <code>estilo.css</code>:</p>
+            <pre><code class="language-css">
+/* Feedback visual para alternativa CORRETA em estilo.css */
+.answer-option-button.correct-answer {
+  border-color: #34c759; /* Borda verde */
+  background: #eaffed; /* Fundo verde clarinho */
+  color: #34c759; /* Texto verde */
+  animation: pulse-correct 0.6s; /* Animacao de pulse! */
+}
+
+@keyframes pulse-correct { /* Animacao de "pulsar" pra resposta certa */
+  0%   { box-shadow: 0 0 0 0 #34c75955; }
+  70%  { box-shadow: 0 0 0 12px #34c75911; }
+  100% { box-shadow: 0 0 0 0 #34c75900; }
+}
+            </code></pre>
+        </section>
+
+        <section id="js-section">
+            <h2>Lógica JavaScript (<code>index.js</code>)</h2>
+            <p>O arquivo <code>index.js</code> contém toda a interatividade e lógica do quiz. Suas principais responsabilidades são:</p>
+            <p>O fluxo principal do quiz é gerenciado por funções como <code>startQuiz</code> (para iniciar e configurar o quiz), <code>displayQuestion</code> (para mostrar a pergunta e alternativas atuais), <code>handleAnswer</code> (para processar a resposta do usuário, atualizar a pontuação e avançar para a próxima pergunta ou resultados), e <code>showResults</code> (para exibir a tela final). Funções auxiliares como <code>updateProgressBar</code> e <code>showNotification</code> cuidam de atualizar a interface do usuário dinamicamente.</p>
+            <ul>
+                <li><strong>Gerenciamento de Perguntas</strong>: Armazena a lista de perguntas, embaralha e seleciona conforme a dificuldade escolhida.</li>
+                <li><strong>Controle de Estado do Quiz</strong>: Mantém o controle da pergunta atual, pontuação, e número total de perguntas.</li>
+                <li><strong>Manipulação do DOM</strong>: Atualiza dinamicamente o conteúdo da página, como exibir perguntas, alternativas, mensagens de feedback e resultados.</li>
+                <li><strong>Event Listeners</strong>: Responde a interações do usuário, como cliques em botões de dificuldade, alternativas de resposta, botão de ajuda e troca de tema.</li>
+                <li><strong>Lógica de Resposta</strong>: Verifica se a resposta selecionada pelo usuário está correta, atualiza a pontuação e fornece feedback visual.</li>
+                <li><strong>Barra de Progresso</strong>: Atualiza a barra de progresso e mensagens motivacionais.</li>
+                <li><strong>Troca de Tema</strong>: Adiciona/remove classes CSS no corpo do documento para alternar entre os temas claro e escuro, e também gerencia o tema secreto. (Esta funcionalidade foi movida para <code>documentation.js</code> mas é chamada por <code>index.js</code> se a página principal também usar o tema).</li>
+                <li><strong>Notificações</strong>: Exibe mensagens flutuantes para ajuda ou outras informações. (Esta funcionalidade foi movida para <code>documentation.js</code>).</li>
+            </ul>
+            <p>Trecho da função que inicia o quiz:</p>
+            <pre><code class="language-javascript">
+function startQuiz(numberOfQuestions) {
+    score = 0; // Zera pontuacao
+    currentQuestionIndex = 0; // Volta pra primeira pergunta
+    // ...
+    selectedQuestions = shuffleArray([...quizQuestions]).slice(0, numberOfQuestions);
+    totalQuestions = numberOfQuestions;
+
+    initialScreenContainer.style.display = 'none';
+    resultsScreenContainer.style.display = 'none';
+    quizInterfaceContainer.style.display = 'flex';
+
+    displayQuestion();
+    updateProgressBar();
+}
+            </code></pre>
+            <p>Exemplo de como a função <code>displayQuestion</code> atualiza o DOM:</p>
+<pre><code class="language-javascript">
+// Em index.js
+function displayQuestion() {
+    const currentQuestion = selectedQuestions[currentQuestionIndex];
+    questionTextElement.textContent = currentQuestion.question;
+
+    answerOptionsContainer.innerHTML = ''; // Limpa alternativas anteriores
+
+    currentQuestion.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'answer-option-button';
+        button.textContent = option;
+        button.onclick = () => handleAnswer(index, button);
+        answerOptionsContainer.appendChild(button);
+    });
+    updateProgressBar();
+}
+</code></pre>
+        </section>
+
+        <section id="doc-css-section">
+            <h2>CSS da Documentação (<code>documentation.css</code>)</h2>
+            <p>O arquivo <code>documentation.css</code> fornece os estilos específicos para esta página de documentação, garantindo uma apresentação clara e consistente com a identidade visual do quiz principal. Ele foi cuidadosamente elaborado para otimizar a legibilidade do conteúdo técnico.</p>
+            <p>Principais características do <code>documentation.css</code>:</p>
+            <ul>
+                <li><strong>Variáveis CSS para Temas</strong>: Define um conjunto de variáveis CSS para facilitar a aplicação de temas (claro e escuro), controlando cores de fundo, texto, links, e outros elementos da interface. Isso permite uma fácil customização e manutenção dos temas.</li>
+                <li><strong>Estilização da Navegação (TOC)</strong>: Formata a tabela de conteúdos para fácil navegação entre as seções da documentação.</li>
+                <li><strong>Tipografia Otimizada</strong>: Ajusta fontes, tamanhos e espaçamentos para melhorar a leitura de parágrafos descritivos e títulos.</li>
+                <li><strong>Formatação de Blocos de Código</strong>: Aplica estilos dedicados aos elementos <code>&lt;pre&gt;</code> e <code>&lt;code&gt;</code> para destacar snippets de código, utilizando cores de fundo e fontes monoespaçadas que facilitam a visualização.</li>
+                <li><strong>Responsividade</strong>: Inclui media queries para adaptar o layout em diferentes tamanhos de tela, assegurando uma boa experiência tanto em desktops quanto em dispositivos móveis.</li>
+                <li><strong>Consistência Visual</strong>: Reutiliza ou adapta elementos de design do <code>estilo.css</code> do quiz para manter uma identidade visual coesa, ao mesmo tempo que introduz estilos próprios para as necessidades de uma página de documentação.</li>
+            </ul>
+            <p>Exemplo da definição de variáveis de cor para os temas em <code>documentation.css</code>:</p>
+            <pre><code class="language-css">
+/* Variáveis de tema em documentation.css */
+:root { /* Tema Claro (Padrão) */
+    --background-color: #f0f2f5;
+    --text-color: #333;
+    --header-text-color: #1a73e8;
+    --link-color: #1a73e8;
+    --pre-background-color: #f8f9fa;
+    /* ...e outras variáveis */
+}
+
+body.dark-theme { /* Tema Escuro */
+    --background-color: #1e1e1e;
+    --text-color: #f0f0f0;
+    --header-text-color: #66aeff;
+    --link-color: #66aeff;
+    --pre-background-color: #282c34; /* Ex: One Dark Pro */
+    /* ...e outras variáveis */
+}
+</code></pre>
+        </section>
+
+    </main>
+
+    <footer class="app-footer">
+        <p>Documentação gerada para o Quiz de Biologia Celular.</p>
+        <p><a href="index.html">Voltar para o Quiz</a></p>
+    </footer>
+
+    <!-- Script para funcionalidade da documentacao, como o theme switcher -->
+    <script src="documentation.js"></script>
+</body>
+</html>

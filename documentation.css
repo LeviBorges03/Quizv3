@@ -1,0 +1,344 @@
+/* documentation.css */
+
+/* Import Inter font, same as the main application */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* Base styles from estilo.css that are relevant for documentation */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color); /* Use CSS variables for theming */
+    color: var(--text-color); /* Use CSS variables for theming */
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Define CSS variables for light theme (default) */
+:root {
+    --background-color: #f0f2f5;
+    --text-color: #333;
+    --header-text-color: #1a73e8;
+    --link-color: #1a73e8;
+    --link-hover-color: #135abc;
+    --nav-background-color: #fff;
+    --nav-border-color: #e0e0e0;
+    --nav-link-color: #555;
+    --nav-link-hover-color: #1a73e8;
+    --pre-background-color: #f8f9fa;
+    --pre-text-color: #333;
+    --pre-border-color: #e0e0e0;
+    --footer-background-color: #e9ecef;
+    --footer-text-color: #555;
+    --button-text-color: #fff;
+    --button-background-color: #1a73e8;
+    --button-hover-background-color: #135abc;
+    --button-box-shadow-color: rgba(26, 115, 232, 0.1);
+    --section-border-color: #ddd;
+    --h-color: #2c3e50;
+}
+
+/* Dark theme variables */
+body.dark-theme {
+    --background-color: #1e1e1e; /* Darker background for the page */
+    --text-color: #f0f0f0; /* Lighter text for readability */
+    --header-text-color: #66aeff; /* A lighter blue for headers in dark mode */
+    --link-color: #66aeff;
+    --link-hover-color: #8cc0ff;
+    --nav-background-color: #2a2a2a; /* Dark background for navigation */
+    --nav-border-color: #3a3a3a; /* Darker border for navigation */
+    --nav-link-color: #ccc; /* Lighter link color for navigation */
+    --nav-link-hover-color: #66aeff;
+    --pre-background-color: #282c34; /* Background for code blocks, e.g., One Dark Pro */
+    --pre-text-color: #abb2bf; /* Text color for code blocks */
+    --pre-border-color: #3a3a3a; /* Border for code blocks */
+    --footer-background-color: #2a2a2a;
+    --footer-text-color: #ccc;
+    --button-background-color: #66aeff;
+    --button-hover-background-color: #8cc0ff;
+    --button-box-shadow-color: rgba(102, 174, 255, 0.15);
+    --section-border-color: #444;
+    --h-color: #e0e0e0; /* Lighter headings for dark mode */
+}
+
+
+#documentation-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--nav-background-color); /* Use nav background for main container too */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.app-title { /* Reusing from estilo.css, ensure it's defined or copy here */
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--header-text-color);
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+}
+
+.app-title span {
+    color: var(--text-color); /* Or a different accent color if desired */
+}
+
+/* Theme switcher button style (reusing from estilo.css if possible, or define here) */
+.theme-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--button-background-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px var(--button-box-shadow-color);
+    transition: background-color 0.3s, transform 0.2s;
+    z-index: 1001; /* Ensure it's above other content */
+}
+
+.theme-switcher:hover {
+    background-color: var(--button-hover-background-color);
+    transform: scale(1.1);
+}
+
+/* TOC Navigation Styles */
+#toc-nav {
+    background-color: var(--nav-background-color);
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    border: 1px solid var(--nav-border-color);
+}
+
+#toc-nav h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: var(--h-color);
+    border-bottom: 2px solid var(--link-color);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+#toc-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#toc-nav ul li {
+    margin-bottom: 8px;
+}
+
+#toc-nav ul li a {
+    text-decoration: none;
+    color: var(--nav-link-color);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+#toc-nav ul li a:hover,
+#toc-nav ul li a:focus {
+    color: var(--nav-link-hover-color);
+    text-decoration: underline;
+}
+
+/* Section Styles */
+section {
+    margin-bottom: 40px;
+    padding-top: 20px; /* For scrollspy highlighting if implemented */
+    border-bottom: 1px solid var(--section-border-color);
+    padding-bottom: 20px;
+}
+section:last-of-type {
+    border-bottom: none;
+}
+
+section h1, section h2 {
+    color: var(--h-color);
+    margin-top: 0; /* Remove default top margin for headings within sections */
+    padding-bottom: 10px;
+}
+
+section h1 { /* For the "Introdução" title */
+    font-size: 2rem;
+    border-bottom: 1px solid var(--section-border-color);
+}
+
+section h2 { /* For other section titles like "Estrutura HTML" */
+    font-size: 1.75rem;
+}
+
+section p, section ul {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+section ul {
+    padding-left: 20px;
+}
+
+section ul li {
+    margin-bottom: 8px;
+}
+
+section strong {
+    font-weight: 600;
+    color: var(--header-text-color); /* Make strong text stand out a bit */
+}
+
+/* Code Block Styles */
+pre {
+    background-color: var(--pre-background-color);
+    color: var(--pre-text-color);
+    border: 1px solid var(--pre-border-color);
+    border-radius: 6px;
+    padding: 15px;
+    overflow-x: auto; /* Allow horizontal scrolling for long code lines */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+pre code {
+    font-family: inherit; /* Inherit font family from pre */
+    background: none; /* Remove any potential background from inline code elements */
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    color: inherit; /* Inherit color from pre */
+}
+
+/* Styles for inline code `<code>` */
+code:not(pre > code) {
+    background-color: var(--pre-background-color);
+    color: var(--header-text-color); /* Use a distinct color for inline code */
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Footer Styles (reusing from estilo.css or define here) */
+.app-footer {
+    text-align: center;
+    padding: 25px 15px;
+    background-color: var(--footer-background-color);
+    color: var(--footer-text-color);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--nav-border-color); /* Match nav border */
+    margin-top: 30px;
+}
+
+.app-footer p {
+    margin: 5px 0;
+}
+
+.app-footer a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.app-footer a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+/* Screen container - reuse from estilo.css if appropriate */
+.screen-container {
+    width: 100%;
+    /* max-width should be handled by #documentation-container for this page */
+    /* min-height: 100vh; */ /* Not needed for documentation page like this */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */ /* Let content flow naturally */
+    /* align-items: center; */ /* Let content flow naturally */
+    padding: 1rem; /* Basic padding */
+    box-sizing: border-box;
+}
+
+
+/* Responsive adjustments for documentation */
+@media (max-width: 768px) {
+    #documentation-container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .app-title {
+        font-size: 1.8rem;
+    }
+
+    section h1 {
+        font-size: 1.7rem;
+    }
+
+    section h2 {
+        font-size: 1.5rem;
+    }
+
+    pre {
+        font-size: 0.85rem;
+    }
+
+    .theme-switcher {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        top: 15px;
+        right: 15px;
+    }
+
+    #toc-nav {
+        padding: 10px;
+    }
+    #toc-nav h2 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        line-height: 1.5;
+    }
+    .app-title {
+        font-size: 1.6rem;
+    }
+
+    section h1 {
+        font-size: 1.5rem;
+    }
+
+    section h2 {
+        font-size: 1.3rem;
+    }
+
+    section p, section ul {
+        font-size: 0.95rem;
+    }
+
+    pre {
+        padding: 10px;
+    }
+}
+
+/* Accessibility: Focus Visible for keyboard navigation */
+a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+}
+
+#toc-nav ul li a:focus-visible {
+     outline: 2px solid var(--nav-link-hover-color);
+     outline-offset: 1px;
+}
